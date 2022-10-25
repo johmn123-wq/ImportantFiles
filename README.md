@@ -11,45 +11,52 @@ Repeat this process until the stack is empty. However, ensure that the nodes tha
 <h2>Implementation in C++: </h2>
 
 ```
-#include<iostream>
-#include<conio.h>
-#include<stdlib.h>
-int cost[10][10],i,j,k,n,stk[10],top,v,visit[10],visited[10];
-int main()
-{
-    int m;
-    cout <<"Enter no of vertices:";
-    cin >> n;
-    cout <<"Enter no of edges:";
-    cin >> m;
-    cout <<"\nEDGES \n";
-    for(k=1; k<=m; k++)
-    {
-        cin >>i>>j;
-        cost[i][j]=1;
-    }
-    cout <<"Enter initial vertex to traverse from:";
-    cin >>v;
-    cout <<"DFS ORDER OF VISITED VERTICES:";
-    cout << v <<" ";
-    visited[v]=1;
-    k=1;
-    while(k<n)
-    {
-        for(j=n; j>=1; j--)
-            if(cost[v][j]!=0 && visited[j]!=1 && visit[j]!=1)
-            {
-                visit[j]=1;
-                stk[top]=j;
-                top++;
-            }
-        v=stk[--top];
-        cout<<v << " ";
-        k++;
-        visit[v]=0;
-        visited[v]=1;
-    }
-    return 0;
+#include <bits/stdc++.h>
+#define ll long long int
+#define f first
+#define s second
+#define pii pair<int,int>
+#define pic pair<int,char>
+using namespace std;
+
+// TC = O(V+E);
+// SC = O(V+E)     +       O(V)     +    O(V)
+//    for adjlist        col array      Auxilery space for recursion
+
+void DFS(int i, int par, vector<int> adj[], vector<int> &vis){
+
+  vis[i] = 1;
+  
+  cout<<"Visited "<<i<<" ";
+  for(auto x: adj[i]){
+  	if(!vis[x]){
+  		DFS(x,i,adj,vis);
+  	}
+  }
 }
+
+int main(){
+
+  int v,e;cin>>v>>e;
+
+  vector<int>adj[v+1];
+  vector<int>vis(v,0);
+
+  for(int i=0;i<e;i++){
+    int a,b;cin>>a>>b;
+    --a,--b;
+    adj[a].push_back(b);
+    adj[b].push_back(a);
+  }
+  
+  for(int i=0;i<v;i++)
+    if(!vis[i])
+    	DFS(i,-1,adj,vis);
+    	
+ return 0;
+}
+
+
+
 ```
 
