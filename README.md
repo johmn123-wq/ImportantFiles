@@ -51,12 +51,10 @@ int main(){
   
   for(int i=0;i<v;i++)
     if(!vis[i])
-    	DFS(i,-1,adj,vis);
+      DFS(i,-1,adj,vis);
     	
  return 0;
 }
-
-
 
 ```
 
